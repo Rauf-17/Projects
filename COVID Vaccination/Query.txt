@@ -1,0 +1,594 @@
+GRANT create table, create sequence, create view TO scott
+
+1.
+
+create table vcreg(vcregno number(10)constraint vcp primary key, vcname varchar2(20), constraint fky foreign key(vcname) references vcompany(vcname));
+insert into vcreg values (1111,'Pfizer');
+insert into vcreg values(1112,'Bangovax');
+insert into vcreg values(1113,'Moderna');
+insert into vcreg values(1114,'Sinopharm');
+insert into vcreg values(1115,'Astrageneca');
+
+drop table vcreg
+
+
+
+select *
+from vcreg
+
+2.
+
+create table vcompany(vcname varchar2(15) constraint vcop primary key, email varchar2(32));
+insert into vcompany values('Pfizer','pfizer.vac@outlook.com');
+insert into vcompany values('Bangovax','bangovax.bd@outlook.com');
+insert into vcompany values('Moderna','moderna.oxu@outlook.com');
+insert into vcompany values('Sinopharm','sinopharm.cn@outlook.com');
+insert into vcompany values('Astrageneca','astrageneca.in@outlook.com');
+
+drop table vcompany
+
+select *
+from vcompany
+
+3.
+
+create table vaccine(code number(12)constraint vac primary key, vname varchar2(15), batchno varchar2(20),constraint fkb foreign key(batchno) references vbatchno(batchno));
+insert into vaccine values(33345,'Pfizer','543a21');
+insert into vaccine values(12758,'Bangovax','f12kd5');
+insert into vaccine values(78723,'Moderna','12dqe2');
+insert into vaccine values(45345,'Sinopharm','qq234a');
+insert into vaccine values(99321,'Astrageneca','p0294v');
+
+drop table vaccine
+
+select *
+from vaccine
+
+4.
+
+create table vbatchno(batchno varchar2(20) constraint vbt primary key, expdate date);
+insert into vbatchno values('543a21', '20-Jan-2023');
+insert into vbatchno values('f12kd5', '10-Mar-2023');
+insert into vbatchno values('12dqe2', '17-Feb-2023');
+insert into vbatchno values('qq234a', '6-Jan-2023');
+insert into vbatchno values('p0294v', '11-Oct-2023');
+
+drop table vbatchno
+
+select *
+from vbatchno
+
+5.
+
+create table vcode(vcregno number(10), code number(12), primary key(vcregno,code));
+insert into vcode values(1111,33345);
+insert into vcode values(1112,12758);
+insert into vcode values(1113,78723);
+insert into vcode values(1114,45345);
+insert into vcode values(1115,99321);
+
+drop table vcode
+
+select *
+from vcode
+
+6.
+
+create table centerreg(centerregno number(12), cphno varchar2(11), primary key(centerregno, cphno), cname varchar(25), constraint fkc foreign key(cname) references center(cname));
+insert into centerreg values(2221, '01939422321','Kurmitola');
+insert into centerreg values(2222, '01431022352','CMH');
+insert into centerreg values(2223, '01845422309','Rajarbagh');
+insert into centerreg values(2224, '01739422908','Kushtia');
+insert into centerreg values(2225, '01339424567','Gazipur');
+
+drop table centerreg
+
+select *
+from centerreg
+
+
+7.
+
+create table center(cname varchar2(25) constraint cnk primary key, address varchar2(30));
+insert into center values('Kurmitola', 'Ka/124, Kurmitola');
+insert into center values ('CMH', '12/a Cantonment Area');
+insert into center values ('Rajarbagh', '127/ga, Jatrabari');
+insert into center values ('Kushtia', '1/a Amlapara');
+insert into center values ('Gazipur', '16/3, DUET');
+
+drop table center
+
+select *
+from center
+
+8.
+
+create table employee(empid number(10), ephno varchar2(11),ename varchar2(20), primary key(empid,ephno));
+insert into employee values(7771, '01882512441','Fatima Adon');
+insert into employee values(7772, '01793414256','Sadia Afrose');
+insert into employee values(7773,'01874984270', 'Rauf Isalm Shuvo');
+insert into employee values(7774,'01866205717', 'Nazmul Hasan Emon');
+insert into employee values(7775,'01634234234','Sakib Zaman');
+
+drop table employee
+
+select *
+from employee
+
+9.
+
+create table centeremp(centerregno number(12),empid number(10), primary key(centerregno, empid));
+insert into centeremp values(2221,7771);
+insert into centeremp values(2222,7772);
+insert into centeremp values(2223,7773);
+insert into centeremp values(2224,7774);
+insert into centeremp values(2225,7775);
+
+drop table centeremp
+
+select *
+from centeremp;
+
+10.
+
+create table register(empid number(10), pid number(10), primary key(empid,pid));
+insert into register values(7771,4441);
+insert into register values(7772,4442);
+insert into register values(7773,4443);
+insert into register values(7774,4444);
+insert into register values(7775,4445);
+
+drop table register
+
+select *
+from register
+
+11.
+
+create table patient(pid number(10),pname varchar2(32), pphno varchar2(11), primary key(pid,pphno));
+insert into patient values(4441,'Shahruk Khan', '01983443431');
+insert into patient values(4442,'Shakib Khan', '01382233438');
+insert into patient values(4443,'Saif Ali Khan', '01883443845');
+insert into patient values(4444,'Salman Khan', '01183783436');
+insert into patient values(4445,'Amir Khan', '01483444551');
+
+drop table patient
+
+select *
+from patient
+
+12.
+
+create table inject(nid number(10), pid number(10), primary key(nid,pid));
+insert into inject values(8881,4441);
+insert into inject values(8882,4442);
+insert into inject values(8883,4443);
+insert into inject values(8884,4444);
+insert into inject values(8885,4445);  
+
+drop table inject
+
+select *
+from inject
+
+13.
+
+create table nurse(nid number(10),nname varchar2(32),nphno varchar2(11), primary key(nid,nphno));
+insert into nurse values(8881,'Rohima Akter', '01987651481');
+insert into nurse values(8882,'Sharmin Begum', '01889818739');
+insert into nurse values(8883,'Rokeya Islam', '01353423484');
+insert into nurse values(8884,'Antara Akter', '01787651245');
+insert into nurse values(8885,'Bilkish Begum', '01487624341'); 
+
+drop table nurse
+
+select *
+from nurse
+
+14.
+
+create table service(centerregno number(10), nid number(10), primary key(centerregno, nid));
+insert into service values(2221,8881);
+insert into service values(2222,8882);
+insert into service values(2223,8883);
+insert into service values(2224,8884);
+insert into service values(2225,8885);
+
+drop table service
+
+select *
+from service;
+
+
+
+
+
+
+
+------------------------------------------------------
+
+Joining
+
+
+-> equi-join
+
+1. select reg.*, com.email
+from vcreg reg, vcompany com
+where reg.vcname = com.vcname;
+
+2. select * 
+from  centerreg cr ,center c 
+where cr.cname=c.cname;
+
+
+-> outer-join
+
+1. select *
+from nurse n,inject i,patient p
+where n.nid=i.nid and i.pid= p.pid;
+
+2. select  e.*,p.pid, p.pname
+from employee e,register i,patient p
+where e.empid=i.empid and i.pid= p.pid;
+
+-> self-join
+
+1. select * 
+from patient p,patient pa 
+where p.pid = pa.pid and p.pname like('Sh%');
+
+-> non-equijoin
+
+1. select * 
+from vaccine v,vbatchno vb 
+where v.batchno=vb.batchno(+);
+
+
+
+------------------------------------------------------
+
+Sub-Query
+
+1. select *
+from inject 
+where nid =(select nid from nurse where nid=8881);
+
+2. select * 
+from vaccine  
+where batchno =(select batchno 
+from vbatchno 
+where batchno='f12kd5');
+
+3. select *
+from centerreg
+where cname >ALL(select cname
+from centerreg
+where centerregno= 2222) and cname like('K%');
+
+4. select * 
+from patient
+where pid IN(select pid
+from patient
+where pid <> 4444) and pname like ('S%');
+
+-> add contraint
+
+1. alter table vaccine add constraint kcl unique(vname);
+2. alter table vaccine modify batchno not null; 
+
+-select constraint_name, column_name from user_cons_columns where table_name = 'VACCINE';
+
+-> View
+
+1. Simple View
+
+create view VacView AS
+select code, vname
+from vaccine
+where batchno = 'qq234a';
+
+ 
+
+
+
+
+1.
+
+create table vcreg(vcregno number(10)constraint vcp primary key, vcname varchar2(20), constraint fky foreign key(vcname) references vcompany(vcname));
+insert into vcreg values (1111,'Pfizer');
+insert into vcreg values(1112,'Bangovax');
+insert into vcreg values(1113,'Moderna');
+insert into vcreg values(1114,'Sinopharm');
+insert into vcreg values(1115,'Astrageneca');
+
+drop table vcreg
+
+
+
+select *
+from vcreg
+
+2.
+
+create table vcompany(vcname varchar2(15) constraint vcop primary key, email varchar2(32));
+insert into vcompany values('Pfizer','pfizer.vac@outlook.com');
+insert into vcompany values('Bangovax','bangovax.bd@outlook.com');
+insert into vcompany values('Moderna','moderna.oxu@outlook.com');
+insert into vcompany values('Sinopharm','sinopharm.cn@outlook.com');
+insert into vcompany values('Astrageneca','astrageneca.in@outlook.com');
+
+drop table vcompany
+
+select *
+from vcompany
+
+3.
+
+create table vaccine(code number(12)constraint vac primary key, vname varchar2(15), batchno varchar2(20),constraint fkb foreign key(batchno) references vbatchno(batchno));
+insert into vaccine values(33345,'Pfizer','543a21');
+insert into vaccine values(12758,'Bangovax','f12kd5');
+insert into vaccine values(78723,'Moderna','12dqe2');
+insert into vaccine values(45345,'Sinopharm','qq234a');
+insert into vaccine values(99321,'Astrageneca','p0294v');
+
+drop table vaccine
+
+select *
+from vaccine
+
+4.
+
+create table vbatchno(batchno varchar2(20) constraint vbt primary key, expdate date);
+insert into vbatchno values('543a21', '20-Jan-2023');
+insert into vbatchno values('f12kd5', '10-Mar-2023');
+insert into vbatchno values('12dqe2', '17-Feb-2023');
+insert into vbatchno values('qq234a', '6-Jan-2023');
+insert into vbatchno values('p0294v', '11-Oct-2023');
+
+drop table vbatchno
+
+select *
+from vbatchno
+
+5.
+
+create table vcode(vcregno number(10), code number(12), primary key(vcregno,code));
+insert into vcode values(1111,33345);
+insert into vcode values(1112,12758);
+insert into vcode values(1113,78723);
+insert into vcode values(1114,45345);
+insert into vcode values(1115,99321);
+
+drop table vcode
+
+select *
+from vcode
+
+6.
+
+create table centerreg(centerregno number(12), cphno varchar2(11), primary key(centerregno, cphno), cname varchar(25), constraint fkc foreign key(cname) references center(cname));
+insert into centerreg values(2221, '01939422321','Kurmitola');
+insert into centerreg values(2222, '01431022352','CMH');
+insert into centerreg values(2223, '01845422309','Rajarbagh');
+insert into centerreg values(2224, '01739422908','Kushtia');
+insert into centerreg values(2225, '01339424567','Gazipur');
+
+drop table centerreg
+
+select *
+from centerreg
+
+
+7.
+
+create table center(cname varchar2(25) constraint cnk primary key, address varchar2(30));
+insert into center values('Kurmitola', 'Ka/124, Kurmitola');
+insert into center values ('CMH', '12/a Cantonment Area');
+insert into center values ('Rajarbagh', '127/ga, Jatrabari');
+insert into center values ('Kushtia', '1/a Amlapara');
+insert into center values ('Gazipur', '16/3, DUET');
+
+drop table center
+
+select *
+from center
+
+8.
+
+create table employee(empid number(10), ephno varchar2(11),ename varchar2(20), primary key(empid,ephno));
+insert into employee values(7771, '01882512441','Fatima Adon');
+insert into employee values(7772, '01793414256','Sadia Afrose');
+insert into employee values(7773,'01874984270', 'Rauf Isalm Shuvo');
+insert into employee values(7774,'01866205717', 'Nazmul Hasan Emon');
+insert into employee values(7775,'01634234234','Sakib Zaman');
+
+drop table employee
+
+select *
+from employee
+
+9.
+
+create table centeremp(centerregno number(12),empid number(10), primary key(centerregno, empid));
+insert into centeremp values(2221,7771);
+insert into centeremp values(2222,7772);
+insert into centeremp values(2223,7773);
+insert into centeremp values(2224,7774);
+insert into centeremp values(2225,7775);
+
+drop table centeremp
+
+select *
+from centeremp;
+
+10.
+
+create table register(empid number(10), pid number(10), primary key(empid,pid));
+insert into register values(7771,4441);
+insert into register values(7772,4442);
+insert into register values(7773,4443);
+insert into register values(7774,4444);
+insert into register values(7775,4445);
+
+drop table register
+
+select *
+from register
+
+11.
+
+create table patient(pid number(10),pname varchar2(32), pphno varchar2(11), primary key(pid,pphno));
+insert into patient values(4441,'Shahruk Khan', '01983443431');
+insert into patient values(4442,'Shakib Khan', '01382233438');
+insert into patient values(4443,'Saif Ali Khan', '01883443845');
+insert into patient values(4444,'Salman Khan', '01183783436');
+insert into patient values(4445,'Amir Khan', '01483444551');
+
+drop table patient
+
+select *
+from patient
+
+12.
+
+create table inject(nid number(10), pid number(10), primary key(nid,pid));
+insert into inject values(8881,4441);
+insert into inject values(8882,4442);
+insert into inject values(8883,4443);
+insert into inject values(8884,4444);
+insert into inject values(8885,4445);  
+
+drop table inject
+
+select *
+from inject
+
+13.
+
+create table nurse(nid number(10),nname varchar2(32),nphno varchar2(11), primary key(nid,nphno));
+insert into nurse values(8881,'Rohima Akter', '01987651481');
+insert into nurse values(8882,'Sharmin Begum', '01889818739');
+insert into nurse values(8883,'Rokeya Islam', '01353423484');
+insert into nurse values(8884,'Antara Akter', '01787651245');
+insert into nurse values(8885,'Bilkish Begum', '01487624341'); 
+
+drop table nurse
+
+select *
+from nurse
+
+14.
+
+create table service(centerregno number(10), nid number(10), primary key(centerregno, nid));
+insert into service values(2221,8881);
+insert into service values(2222,8882);
+insert into service values(2223,8883);
+insert into service values(2224,8884);
+insert into service values(2225,8885);
+
+drop table service
+
+select *
+from service;
+
+
+
+
+
+
+
+------------------------------------------------------
+
+Joining
+
+
+-> equi-join
+
+1. select reg.*, com.email
+from vcreg reg, vcompany com
+where reg.vcname = com.vcname;
+
+2. select * 
+from  centerreg cr ,center c 
+where cr.cname=c.cname;
+
+
+-> outer-join
+
+1. select *
+from nurse n,inject i,patient p
+where n.nid=i.nid and i.pid= p.pid;
+
+2. select  e.*,p.pid, p.pname
+from employee e,register i,patient p
+where e.empid=i.empid and i.pid= p.pid;
+
+-> self-join
+
+1. select * 
+from patient p,patient pa 
+where p.pid = pa.pid and p.pname like('Sh%');
+
+-> non-equijoin
+
+1. select * 
+from vaccine v,vbatchno vb 
+where v.batchno=vb.batchno(+);
+
+
+
+------------------------------------------------------
+
+Sub-Query
+
+1. select *
+from inject 
+where nid =(select nid from nurse where nid=8881);
+
+2. select * 
+from vaccine  
+where batchno =(select batchno 
+from vbatchno 
+where batchno='f12kd5');
+
+3. select *
+from centerreg
+where cname >ALL(select cname
+from centerreg
+where centerregno= 2222) and cname like('K%');
+
+4. select * 
+from patient
+where pid IN(select pid
+from patient
+where pid <> 4444) and pname like ('S%');
+
+-> add contraint
+
+1. alter table vaccine add constraint kcl unique(vname);
+2. alter table vaccine modify batchno not null; 
+
+-select constraint_name, column_name from user_cons_columns where table_name = 'VACCINE';
+
+-> View
+
+1. Simple View
+
+create view VacView AS
+select code, vname
+from vaccine
+where batchno = 'qq234a';
+
+select *
+from VacView
+
+2. Complex View
+
+create view EXPView AS
+select vname, MAX(expdate) MAXEXP, MIN(expdate) MINEXP
+from vaccine vc, vbatchno vno
+where vc.batchno = vno.batchno
+group by vname;
+
+select *
+from EXPView
